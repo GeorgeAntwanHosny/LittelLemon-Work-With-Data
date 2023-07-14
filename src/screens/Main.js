@@ -46,8 +46,10 @@ export default function Main() {
     // So the server response should be slighly transformed in this function (hint: map function) to flatten out each menu item in the array,
     const data = await fetch(API_URL);
     const jsonData = await data.json();
-    console.log('server data', jsonData.menu);
-    return jsonData.menu;
+    return jsonData.menu.map(item => ({
+      ...item,
+      category: item.category.title,
+    }));
   };
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function Main() {
         // and then stores it into a SQLite database.
         // After that, every application restart loads the menu from the database
         if (!menuItems.length) {
-          const menuItems = await fetchData();
+          menuItems = await fetchData();
           for (let index = 0; index < menuItems.length; index++) {
             await saveMenuItems(menuItems[index]);
           }

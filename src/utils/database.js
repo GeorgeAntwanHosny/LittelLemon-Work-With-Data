@@ -52,7 +52,7 @@ export function saveMenuItems(menuItem) {
     db.transaction(tx => {
       tx.executeSql(
         'INSERT INTO menuitems (uuid, title, price, category) VALUES (?, ?, ?, ?)',
-        [menuItem.id, menuItem.title, menuItem.price, menuItem.category.title],
+        [menuItem.id, menuItem.title, menuItem.price, menuItem.category],
         (tx, results) => {
           // console.log('Data inserted successfully');
           resolve();
